@@ -9,26 +9,36 @@ on:
 jobs:
   build:
 
-    runs-on: self-hosted
-
-    steps:
+    runs-on: ubuntu-20.04
+    env: 
+      working-directory: ./backend
+    
+      steps:
     - uses: actions/checkout@v2
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v2
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
-    - run: cd /backend
     - run: npm install
     - run: npm build
-    - run: cd ..
-    - run: cd /frontend
-    - run: npm install
-    - run: npm build
-    - run: cd ..
     - run: pm2 stop 0
     - run: pm2 start 0
     - run: pm2 save
     - run: sudo service nginx restart
+
+    runs-on: ubuntu-20.04
+    env: 
+      working-directory: ./frontend
+    
+      steps:
+    - uses: actions/checkout@v2
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v2
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+    - run: npm install
+    - run: npm build
 
 
