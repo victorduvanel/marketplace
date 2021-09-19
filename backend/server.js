@@ -6,10 +6,7 @@ const morgan = require('morgan');
 require ('dotenv').config();
 
 const app = express();
-
-//github connection
-// const path = require('path')
-// app.use(express.static(path.join(__direname, '/../marketplace-client')));
+const path = require('path')
 
 //db connection
 mongoose
@@ -26,6 +23,8 @@ mongoose
 app.use(cors());
 app.use(morgan('dev'));
 app.use(express.json());
+app.use(express.static(path.join(__direname, '/marketplace')));
+
 
 // route middleware
 readdirSync("./routes").map((r) => app.use("/api", require(`./routes/${r}`)));
