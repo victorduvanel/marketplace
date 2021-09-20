@@ -18,7 +18,7 @@ const DashboardNav = () => {
           className={`nav-link ${active === "/dashboard/seller" && "active"}`}
           to="/dashboard/seller"
         >
-          Vos produits à vendre
+          Vendre
         </Link>
       </li>
     </ul>

@@ -4,7 +4,7 @@ import "react-toastify/dist/ReactToastify.css";
 import TopNav from "./components/TopNav";
 import PrivateRoute from "./components/PrivateRoute";
 // components
-import Home from "../src/booking/Home";
+import Home from "../src/home/Home";
 import Register from "../src/auth/Register";
 import Login from "../src/auth/Login";
 import Dashboard from "./user/Dashboard";

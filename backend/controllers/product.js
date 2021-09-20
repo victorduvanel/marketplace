@@ -9,6 +9,7 @@ export const create = async (req, res) => {
     let files = req.files;
 
     let product = new Product(fields);
+    product.postedBy = req.user._id;
     //handle image
     if (files.image) {
       product.image.data = fs.readFileSync(files.image.path);
@@ -48,4 +49,18 @@ export const image = async (req, res) => {
     res.set("Content-Type", product.image.contentType);
     return res.send(product.image.data);
   }
+};
+
+export const sellerProducts = async (req, res) => {
+  let all = await Product.find({ postedBy: req.user._id })
+    .select("-image.data")
+    .populate("postedBy", "_id name")
+    .exec();
+  console.log(all);
+  res.send(all);
+};
+
+export const remove = async (req, res) => {
+  let removed = await Product.findByIdAndDelete(req.params.productId).exec();
+  res.json(removed);
 };

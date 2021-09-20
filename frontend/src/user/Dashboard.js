@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 const Dashboard = () => {
   return (
     <>
-      <div className="container-fluid bg-secondary p-5 text-center">
+      <div className="container-fluid bg-dark p-5 text-center">
         <ConnectNav />
       </div>
 

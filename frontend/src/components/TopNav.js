@@ -17,29 +17,29 @@ const TopNav = () => {
   };
 
   return (
-    <div className="nav bg-light d-flex justify-content-between">
-      <Link className="nav-link" to="/">
+    <div className="nav bg-dark d-flex justify-content-between">
+      <Link className="nav-link text-light" to="/">
         Home
       </Link>
 
       {auth !== null && (
-          <Link className="nav-link" to="/dashboard">
+          <Link className="nav-link text-light" to="/dashboard">
             Dashboard
           </Link>
           
       )}
 
       {auth != null && (
-        <a className="nav-link pointer" onClick={logout}>
+        <a className="nav-link pointer text-light" onClick={logout}>
           Logout
         </a>
       )}
       {auth === null && (
         <>
-          <Link className="nav-link" to="/login">
+          <Link className="nav-link text-light" to="/login">
             Login
           </Link>
-          <Link className="nav-link" to="/register">
+          <Link className="nav-link text-light" to="/register">
             Register
           </Link>
         </>

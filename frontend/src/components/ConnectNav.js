@@ -42,7 +42,7 @@ const ConnectNav = () => {
 
   return (
     <div className="d-flex justify-content-around">
-      <Card>
+      <Card className="bg-light rounded">
         <Meta
           avatar={<Avatar>{user.name[0]}</Avatar>}
           title={user.name}
@@ -55,7 +55,7 @@ const ConnectNav = () => {
         auth.user.stripe_seller.charges_enabled && (
           <>
             <Ribbon text="Votre avoir" color="green">
-              <Card className="bg-light pt-1">
+              <Card className="bg-light pt-1 rounded">
                 {balance &&
                   balance.pending &&
                   balance.pending.map((bp, i) => (
@@ -65,8 +65,8 @@ const ConnectNav = () => {
                   ))}
               </Card>
             </Ribbon>
-            <Ribbon text="Paramètres de paiement" color="silver">
-              <Card onClick={handlePayoutSettings} className="bg-light pointer">
+            <Ribbon text="Payout" color="gold">
+              <Card onClick={handlePayoutSettings} className="bg-light pointer rounded">
                 <SettingOutlined className="h5 pt-2" />
               </Card>
             </Ribbon>

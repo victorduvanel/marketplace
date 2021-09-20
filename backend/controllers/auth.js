@@ -2,19 +2,20 @@ import User from "../models/user";
 import jwt from "jsonwebtoken";
 
 export const register = async (req, res) => {
-  console.log(req.body);
-  const { name, email, password } = req.body;
-  // ==> validation
-  if (!name) return res.status(400).send("Le nom est requis");
-  if (!password || password.lenght < 6)
-    return res
-      .status(400)
-      .send("Le mot de passe est requis et doit contenir 6 caractères minimum");
-  let userExist = await User.findOne({ email }).exec();
-  if (userExist) return res.status(400).send("Cet email est déjà utilisé");
-  // ==> Register
-  const user = new User(req.body);
   try {
+    console.log(req.body);
+    const { name, email, password } = req.body;
+    // ==> validation
+    if (!name) return res.status(400).send("Le nom est requis");
+    if (!password || password.lenght < 6)
+      return res
+        .status(400)
+        .send("Le mot de passe est requis et doit contenir 6 caractères minimum");
+    let userExist = await User.findOne({ email }).exec();
+    if (userExist) return res.status(400).send("Cet email est déjà utilisé");
+    // ==> Register
+    const user = new User(req.body);
+    
     await user.save();
     console.log("YOUHOU, UTILISATEUR CRÉÉ", user);
     return res.json({ ok: true });
