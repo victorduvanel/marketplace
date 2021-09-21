@@ -24,9 +24,11 @@ jobs:
       uses: bluwy/substitute-string-action@v1
       id: sub-frontend
       with:
-        _input-file: './frontend/.env'
+        _input-file: 'frontend/.env'
         _format-key: '%%key%%'
         stripe_key: ${{ secrets.REACT_APP_STRIPE_KEY }}
+        
+    - run: cat frontend/.env
         
     # install on backend
     - run: npm i
@@ -37,7 +39,7 @@ jobs:
       uses: bluwy/substitute-string-action@v1
       id: sub-backend
       with:
-        _input-file: './backend/.env'
+        _input-file: 'backend/.env'
         _format-key: '%%key%%'
         stripe_secret: ${{ secrets.STRIPE_SECRET }}
         database: ${{ secrets.DATABASE }}
@@ -46,6 +48,7 @@ jobs:
         stripe_redirect: ${{ secrets.STRIPE_REDIRECT_URL }}
         stripe_setting_redirect: ${{ secrets.STRIPE_SETTING_REDIRECT_URL }}
         
+    - run: cat backend/.env
     
     # send files of frontend
     - name: Deploy frontend files via SSH
@@ -73,6 +76,8 @@ jobs:
       with:
           # Trouver un moyen pour récupérer les fichiers digital-oceans-deploy.env et docker-compose-deploy.yml
           command: |
+            ufw allow 80
+            ufw allow 443
             sudo snap install node --classic
             cd frontend/ && (npm run start&)
             cd ../backend/ && (npm run start&)
