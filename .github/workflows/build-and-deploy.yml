@@ -49,23 +49,21 @@ jobs:
     
     # send files of frontend
     - name: Deploy frontend files via SSH
-      uses: garygrossgarten/github-action-scp@release
+      uses: wangyucode/sftp-upload-action@v1.1
       with:
-        local: frontend
-        remote: frontend
         host: 164.90.175.228
-        username: root
         password: dy#3d#v2Y7JQAT
+        localDir: frontend
+        remoteDir: frontend
         
     # send files of backend
     - name: Deploy backend files via SSH
-      uses: garygrossgarten/github-action-scp@release
+      uses: wangyucode/sftp-upload-action@v1.1
       with:
-        local: backend
-        remote: backend
         host: 164.90.175.228
-        username: root
         password: dy#3d#v2Y7JQAT
+        localDir: backend
+        remoteDir: backend
           
       # connect to the droplet and npm start for backend and frontend
     - name: Execute SSH commmands on remote server
