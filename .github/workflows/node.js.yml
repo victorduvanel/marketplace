@@ -39,7 +39,7 @@ jobs:
         _input-file: './frontend/digital-oceans.env'
         _format-key: '%%key%%'
         stripe_key: ${{ secrets.REACT_APP_STRIPE_KEY }}
-        stripe_secret: ${{ sk_test_kgdUGG02Zzbo4gGcWmkV1Ug2 }}
+        stripe_secret: ${{ secrets.STRIPE_SECRET }}
         app_api: ${{ secrets.REACT_APP_API }}
         database: ${{ secrets.DATABASE }}
         port: ${{ secrets.PORT }}
