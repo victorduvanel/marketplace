@@ -25,9 +25,10 @@ jobs:
       id: sub-frontend
       with:
         _input-file: 'frontend/.env'
-        _output-file: 'frontend/digital-oceans.env'
+        _output-file: 'frontend/.env'
         _format-key: '%%key%%'
         stripe_key: ${{ secrets.REACT_APP_STRIPE_KEY }}
+        app_api: ${{ secrets.REACT_APP_API }}
         
     - run: cat frontend/digital-oceans.env
         
@@ -41,6 +42,7 @@ jobs:
       id: sub-backend
       with:
         _input-file: 'backend/.env'
+        _output-file: 'backend/.env'
         _format-key: '%%key%%'
         stripe_secret: ${{ secrets.STRIPE_SECRET }}
         database: ${{ secrets.DATABASE }}
