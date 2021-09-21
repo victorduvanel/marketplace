@@ -82,6 +82,7 @@ jobs:
             ufw allow 3000
             ufw allow 8000
             sudo snap install node --classic
+            killall node
             cd frontend/
             npm start &
             cd ../backend/
