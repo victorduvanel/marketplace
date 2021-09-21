@@ -3,15 +3,7 @@
 
 name: Node.js CI
 
-on:
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
-
-defaults:
-  run:
-    working-directory: frontend
+on: push
 
 jobs:
   build:
@@ -21,15 +13,73 @@ jobs:
     strategy:
       matrix:
         node-version: [12.x, 14.x, 16.x]
-        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
+    # checkout
     - uses: actions/checkout@v2
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v2
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
-    - run: npm ci
-    - run: npm run build --if-present
-    - run: npm test
+        
+    # install on frontend
+    - run: cd frontend/
+    - run: npm i
+    
+    # install on backend
+    - run: ../backend/
+    - run: npm i
+    
+    # SUBSTITUTE WITH SECRETS 
+    # TO BE DONE
+    
+    # send files of frontend
+    - name: ftp-action
+        # You may pin to the exact commit or the version.
+        # uses: sebastianpopp/ftp-action@eb75c5cb29d23ee4a729720a27dfb66403cb0f6d
+      uses: sebastianpopp/ftp-action@v2.0.0
+      with:
+        # FTP host
+        host: 
+        # FTP user
+        user: 
+        # FTP password
+        password: 
+        # Force SSL encryption
+        forceSsl: # optional, default is false
+        # Local directory
+        localDir: # optional, default is .
+        # Remote directory
+        remoteDir: # optional, default is .
+
+    # send files of backend
+    - name: ftp-action
+      # You may pin to the exact commit or the version.
+      # uses: sebastianpopp/ftp-action@eb75c5cb29d23ee4a729720a27dfb66403cb0f6d
+      uses: sebastianpopp/ftp-action@v2.0.0
+      with:
+        # FTP host
+        host: 
+        # FTP user
+        user: 
+        # FTP password
+        password: 
+        # Force SSL encryption
+        forceSsl: # optional, default is false
+        # Local directory
+        localDir: # optional, default is .
+        # Remote directory
+        remoteDir: # optional, default is .
+
+      # connect to the droplet and npm start for backend and frontend
+      - name: Execute SSH commmands on remote server
+        uses: tarunjangra/ssh-remote-cmd@v1
+        with:
+          # Trouver un moyen pour récupérer les fichiers digital-oceans-deploy.env et docker-compose-deploy.yml
+          command: |
+            cd frontend/ && (npm run start&)
+            cd ../backend/ && (npm run start&)
+          host: ${{ secrets.DIGITAL_OCEANS_HOST }}
+          user: root
+          pass: ${{ secrets.DIGITAL_OCEANS_PASSWORD }}
