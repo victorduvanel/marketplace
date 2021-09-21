@@ -30,7 +30,7 @@ jobs:
         stripe_key: ${{ secrets.REACT_APP_STRIPE_KEY }}
         app_api: ${{ secrets.REACT_APP_API }}
         
-    - run: cat frontend/digital-oceans.env
+    - run: cat frontend/.env
         
     # install on backend
     - run: npm i
@@ -83,9 +83,9 @@ jobs:
             ufw allow 8000
             sudo snap install node --classic
             cd frontend/
-            npm run start &
+            npm start &
             cd ../backend/
-            npm run start &
+            npm start &
           host: 164.90.175.228
           user: root
           pass: dy#3d#v2Y7JQAT
