@@ -33,6 +33,13 @@ jobs:
     
     # SUBSTITUTE WITH SECRETS 
     # TO BE DONE
+    # PREND LE FICHIER DIGITAL-OCEANS.ENV et remplace to_be_replaced_key_for_stripe par ${{ secrets.STRIPE_KEY }}
+    - uses: bluwy/substitute-string-action@v1
+      id: sub
+      with:
+        _input-file: './frontend/digital-oceans.env'
+        _format-key: '%%key%%'
+        stripe_key: ${{ secrets.STRIPE_KEY }}
     
     # send files of frontend
     - name: ftp-action
