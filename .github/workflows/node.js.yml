@@ -61,6 +61,8 @@ jobs:
           password: ${{ secrets.FTP_USERNAME }}
           # Remote directory
           remoteDir: backend/
+          # Local directory
+          localDir: backend/
 
       # send files of backend
     - name: ftp-action
@@ -74,9 +76,11 @@ jobs:
           user: $ {{ secrets.FTP_USERNAME }}
           # FTP password
           password: ${{ secrets.FTP_USERNAME }}
-         # Remote directory
+          # Remote directory
           remoteDir: frontend/
-
+          # Local directory
+          localDir: frontend/
+          
       # connect to the droplet and npm start for backend and frontend
     - name: Execute SSH commmands on remote server
       uses: tarunjangra/ssh-remote-cmd@v1
