@@ -36,11 +36,18 @@ jobs:
     - uses: bluwy/substitute-string-action@v1
       id: sub
       with:
-        _input-file: './frontend/digital-oceans.env'
+        _input-file: './frontend/.env'
         _format-key: '%%key%%'
         stripe_key: ${{ secrets.REACT_APP_STRIPE_KEY }}
-        stripe_secret: ${{ secrets.STRIPE_SECRET }}
         app_api: ${{ secrets.REACT_APP_API }}
+        
+    # replace to_be_replaced_key_for_stripe by ${{ secrets.STRIPE_KEY }}
+    - uses: bluwy/substitute-string-action@v1
+      id: sub2
+      with:
+        _input-file: './backend/.env'
+        _format-key: '%%key%%'
+        stripe_secret: ${{ secrets.STRIPE_SECRET }}
         database: ${{ secrets.DATABASE }}
         port: ${{ secrets.PORT }}
         jwt: ${{ secrets.JWT_SECRET }}
@@ -60,8 +67,10 @@ jobs:
           user: $ {{ secrets.FTP_USERNAME }}
           # FTP password
           password: ${{ secrets.FTP_USERNAME }}
+          # Local directory
+          localDir: "backend"
           # Remote directory
-          remoteDir: backend/
+          remoteDir: "backend/"
 
       # send files of backend
     - name: ftp-action
@@ -75,6 +84,8 @@ jobs:
           user: $ {{ secrets.FTP_USERNAME }}
           # FTP password
           password: ${{ secrets.FTP_USERNAME }}
+          # Local directory
+          localDir: "frontend"
          # Remote directory
           remoteDir: frontend/
 
