@@ -39,7 +39,7 @@ jobs:
       with:
         _input-file: './frontend/digital-oceans.env'
         _format-key: '%%key%%'
-        stripe_key: ${{ secrets.STRIPE_KEY }}
+        stripe_key: ${{ secrets.REACT_APP_STRIPE_KEY }}
     
     # send files of frontend
     - name: ftp-action
