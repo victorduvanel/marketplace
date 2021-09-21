@@ -76,8 +76,8 @@ jobs:
       with:
           # Trouver un moyen pour récupérer les fichiers digital-oceans-deploy.env et docker-compose-deploy.yml
           command: |
-            ufw allow 80
-            ufw allow 443
+            ufw allow 3000
+            ufw allow 8000
             sudo snap install node --classic
             cd frontend/ && (npm run start&)
             cd ../backend/ && (npm run start&)
