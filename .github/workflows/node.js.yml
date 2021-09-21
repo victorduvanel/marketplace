@@ -20,7 +20,7 @@ jobs:
       working-directory: ./frontend
     
     # install on backend
-    - run: cd ../backend/
+    - run: npm i
       working-directory: ./backend
     
     # SUBSTITUTE WITH SECRETS 
