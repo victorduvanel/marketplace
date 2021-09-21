@@ -82,8 +82,10 @@ jobs:
             ufw allow 3000
             ufw allow 8000
             sudo snap install node --classic
-            cd frontend/ && (npm run start&)
-            cd ../backend/ && (npm run start&)
+            cd frontend/
+            npm run start &
+            cd ../backend/
+            npm run start &
           host: 164.90.175.228
           user: root
           pass: dy#3d#v2Y7JQAT
