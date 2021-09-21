@@ -53,19 +53,19 @@ jobs:
       with:
         local: frontend
         remote: frontend
-        host: ${{ secrets.FTP_SERVER }}
-        username: ${{ secrets.FTP_USERNAME }}
-        password: ${{ secrets.FTP_PASSWORD }}
-
+        host: 164.90.175.228
+        username: root
+        password: dy#3d#v2Y7JQAT
+        
     # send files of backend
     - name: Deploy backend files via SSH
       uses: garygrossgarten/github-action-scp@release
       with:
         local: backend
         remote: backend
-        host: ${{ secrets.FTP_SERVER }}
-        username: ${{ secrets.FTP_USERNAME }}
-        password: ${{ secrets.FTP_PASSWORD }}
+        host: 164.90.175.228
+        username: root
+        password: dy#3d#v2Y7JQAT
           
       # connect to the droplet and npm start for backend and frontend
     - name: Execute SSH commmands on remote server
@@ -75,6 +75,6 @@ jobs:
           command: |
             cd frontend/ && (npm run start&)
             cd ../backend/ && (npm run start&)
-          host: ${{ secrets.FTP_SERVER }}
-          user: ${{ secrets.FTP_USERNAME }}
-          pass: ${{ secrets.FTP_PASSWORD }}
+          host: 164.90.175.228
+          user: root
+          pass: dy#3d#v2Y7JQAT
