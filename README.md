@@ -1,0 +1,1 @@
+[![Build and deploy the *FAMOUS* Marketplace of totor.ch on its own droplet](https://github.com/victorduvanel/marketplace/actions/workflows/build-and-deploy.yml/badge.svg)](https://github.com/victorduvanel/marketplace/actions/workflows/build-and-deploy.yml)
