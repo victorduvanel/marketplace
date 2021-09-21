@@ -56,7 +56,7 @@ jobs:
          # FTP host
           host: ${{ secrets.FTP_SERVER }}
           # FTP user
-          user: $ {{ secrets.FTP_USERNAME }}
+          user: ${{ secrets.FTP_USERNAME }}
           # FTP password
           password: ${{ secrets.FTP_PASSWORD }}
           # Remote directory
@@ -73,7 +73,7 @@ jobs:
           # FTP host
           host: ${{ secrets.FTP_SERVER }}
           # FTP user
-          user: $ {{ secrets.FTP_USERNAME }}
+          user: ${{ secrets.FTP_USERNAME }}
           # FTP password
           password: ${{ secrets.FTP_PASSWORD }}
           # Remote directory
@@ -90,5 +90,5 @@ jobs:
             cd frontend/ && (npm run start&)
             cd ../backend/ && (npm run start&)
           host: ${{ secrets.FTP_SERVER }}
-          user: root
+          user: ${{ secrets.FTP_USERNAME }}
           pass: ${{ secrets.FTP_PASSWORD }}
