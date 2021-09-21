@@ -49,12 +49,13 @@ jobs:
     
     # send files of frontend
     - name: Deploy frontend files via SSH
-      uses: wangyucode/sftp-upload-action@v1.1
+      uses: appleboy/scp-action@master
       with:
         host: 164.90.175.228
+        username: root
         password: dy#3d#v2Y7JQAT
-        localDir: frontend
-        remoteDir: frontend
+        source: "frontend/*"
+        target: "frontend"
         
     # send files of backend
     - name: Deploy backend files via SSH
