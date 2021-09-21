@@ -8,9 +8,10 @@ import Home from "../src/home/Home";
 import Register from "../src/auth/Register";
 import Login from "../src/auth/Login";
 import Dashboard from "./user/Dashboard";
-import DashboardSeller from "./user/DashboardSeller"
+import DashboardSeller from "./user/DashboardSeller";
 import NewProduct from "./products/NewProduct";
 import StripeCallback from "./stripe/StripeCallback";
+import EditProduct from "./products/EditProduct";
 
 function App() {
   return (
@@ -22,9 +23,23 @@ function App() {
         <Route exact path="/login" component={Login} />
         <Route exact path="/register" component={Register} />
         <PrivateRoute exact path="/dashboard" component={Dashboard} />
-        <PrivateRoute exact path="/dashboard/seller" component={DashboardSeller} />
-        <PrivateRoute exact path="/products/newproduct" component={NewProduct} />
-        <PrivateRoute exact path="/stripe/callback" component={StripeCallback} />
+        <PrivateRoute
+          exact
+          path="/dashboard/seller"
+          component={DashboardSeller}
+        />
+        <PrivateRoute
+          exact
+          path="/products/newproduct"
+          component={NewProduct}
+        />
+        <PrivateRoute
+          exact
+          path="/stripe/callback"
+          component={StripeCallback}
+        />
+        <PrivateRoute exact path="/product/edit/:productId" component={EditProduct} />
+
       </Switch>
     </BrowserRouter>
   );

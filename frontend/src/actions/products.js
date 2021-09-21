@@ -26,3 +26,17 @@ export const deleteProduct = async (token, productId) =>
       },
     }
   );
+
+export const read = async (productId) =>
+  await axios.get(`${process.env.REACT_APP_API}/product/${productId}`);
+
+export const updateProduct = async (token, data, productId) =>
+  await axios.put(
+    `${process.env.REACT_APP_API}/update-product/${productId}`,
+    data,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );

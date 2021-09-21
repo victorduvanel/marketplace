@@ -64,3 +64,37 @@ export const remove = async (req, res) => {
   let removed = await Product.findByIdAndDelete(req.params.productId).exec();
   res.json(removed);
 };
+
+export const read = async (req, res) => {
+  let product = await Product.findById(req.params.productId)
+    .select("-image.data")
+    .exec();
+  console.log("SINGLE PRODUCT", product);
+  res.json(product);
+};
+
+export const update = async (req, res) => {
+  try {
+    let fields = req.fields;
+    let files = req.files;
+
+    let data = { ...fields };
+
+    if (files.image) {
+      let image = {};
+      image.data = fs.readFileSync(files.image.path);
+      image.contentType = files.image.type;
+
+      data.image = image;
+    }
+
+    let updated = await Product.findByIdAndUpdate(req.params.productId, data, {
+      new: true,
+    }).select("-image.data");
+
+    res.json(updated);
+  } catch (err) {
+    console.log(err);
+    res.status(400).send("Echec de la mise à jour, essayez à nouveau");
+  }
+};
