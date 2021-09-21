@@ -55,7 +55,7 @@ jobs:
         username: root
         password: dy#3d#v2Y7JQAT
         source: "frontend/*"
-        target: "frontend"
+        target: "."
         
     # send files of backend
     - name: Deploy backend files via SSH
@@ -65,7 +65,7 @@ jobs:
         username: root
         password: dy#3d#v2Y7JQAT
         source: "backend/*"
-        target: "backend"
+        target: "."
           
       # connect to the droplet and npm start for backend and frontend
     - name: Execute SSH commmands on remote server
@@ -73,6 +73,7 @@ jobs:
       with:
           # Trouver un moyen pour récupérer les fichiers digital-oceans-deploy.env et docker-compose-deploy.yml
           command: |
+            sudo snap install node --classic
             cd frontend/ && (npm run start&)
             cd ../backend/ && (npm run start&)
           host: 164.90.175.228
