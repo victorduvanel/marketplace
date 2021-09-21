@@ -12,16 +12,15 @@ jobs:
     
     steps:
     # checkout
-    - uses: actions/checkout@v2
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v2
+    - name: Check out repository code
+      uses: actions/checkout@v2
         
     # install on frontend
     - run: cd frontend/
     - run: npm i
     
     # install on backend
-    - run: ../backend/
+    - run: cd ../backend/
     - run: npm i
     
     # SUBSTITUTE WITH SECRETS 
