@@ -19,20 +19,27 @@ jobs:
     - run: npm i
       working-directory: ./frontend
     
+    # Substitute secret for the frontend part
+    - name: Substitute frontend env file
+      uses: bluwy/substitute-string-action@v1
+      id: sub-frontend
+      with:
+        _input-file: './frontend/.env'
+        _format-key: '%%key%%'
+        stripe_key: ${{ secrets.REACT_APP_STRIPE_KEY }}
+        
     # install on backend
     - run: npm i
       working-directory: ./backend
     
-    # SUBSTITUTE WITH SECRETS 
-    # replace to_be_replaced_key_for_stripe by ${{ secrets.STRIPE_KEY }}
-    - uses: bluwy/substitute-string-action@v1
-      id: sub
+    # Substitute secret for the frontend part
+    - name: Substitute backend env file
+      uses: bluwy/substitute-string-action@v1
+      id: sub-backend
       with:
-        _input-file: './frontend/digital-oceans.env'
+        _input-file: './backend/.env'
         _format-key: '%%key%%'
-        stripe_key: ${{ secrets.REACT_APP_STRIPE_KEY }}
         stripe_secret: ${{ secrets.STRIPE_SECRET }}
-        app_api: ${{ secrets.REACT_APP_API }}
         database: ${{ secrets.DATABASE }}
         port: ${{ secrets.PORT }}
         jwt: ${{ secrets.JWT_SECRET }}
