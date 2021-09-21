@@ -59,12 +59,13 @@ jobs:
         
     # send files of backend
     - name: Deploy backend files via SSH
-      uses: wangyucode/sftp-upload-action@v1.1
+      uses: appleboy/scp-action@master
       with:
         host: 164.90.175.228
+        username: root
         password: dy#3d#v2Y7JQAT
-        localDir: backend
-        remoteDir: backend
+        source: "backend/*"
+        target: "backend"
           
       # connect to the droplet and npm start for backend and frontend
     - name: Execute SSH commmands on remote server
