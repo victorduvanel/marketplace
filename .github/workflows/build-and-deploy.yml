@@ -25,10 +25,11 @@ jobs:
       id: sub-frontend
       with:
         _input-file: 'frontend/.env'
+        _output-file: 'frontend/digital-oceans.env'
         _format-key: '%%key%%'
         stripe_key: ${{ secrets.REACT_APP_STRIPE_KEY }}
         
-    - run: cat frontend/.env
+    - run: cat frontend/digital-oceans.env
         
     # install on backend
     - run: npm i
