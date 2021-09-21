@@ -48,47 +48,24 @@ jobs:
         
     
     # send files of frontend
-    
-    
-    - name: SFTP Deploy
-      # You may pin to the exact commit or the version.
-      # uses: wlixcc/SFTP-Deploy-Action@28d6168ebf0707d5c118b3bbdfb831b56046127c
-      uses: wlixcc/SFTP-Deploy-Action@v1.2.1
+    - name: Deploy frontend files via SSH
+      uses: garygrossgarten/github-action-scp@release
       with:
-        # username
-        username: ${{ secrets.FTP_USERNAME }}
-        # your sftp server
-        server: ${{ secrets.FTP_SERVER }}
-        # your sftp server port, default to 22
-        port: 22
-        # you can copy private_key from your *.pem file, keep format
-        ssh_private_key: ${{ secrets.SSH_PRIVATE_KEY }}
-        # will put all file under this path
-        local_path: frontend
-        # files will copy to under remote_path
-        remote_path: backend
-        # sftp args
-        args: # optional
-          
-          
-          
+        local: frontend
+        remote: frontend
+        host: ${{ secrets.FTP_SERVER }}
+        username: ${{ secrets.FTP_USERNAME }}
+        password: ${{ secrets.FTP_PASSWORD }}
 
-      # send files of backend
-    - name: ftp-action
-        # You may pin to the exact commit or the version.
-        # uses: sebastianpopp/ftp-action@eb75c5cb29d23ee4a729720a27dfb66403cb0f6d
-      uses: sebastianpopp/ftp-action@v2.0.0
+    # send files of backend
+    - name: Deploy backend files via SSH
+      uses: garygrossgarten/github-action-scp@release
       with:
-          # FTP host
-          host: ${{ secrets.FTP_SERVER }}
-          # FTP user
-          user: ${{ secrets.FTP_USERNAME }}
-          # FTP password
-          password: ${{ secrets.FTP_PASSWORD }}
-          # Remote directory
-          remoteDir: frontend/
-          # Local directory
-          localDir: frontend/
+        local: backend
+        remote: backend
+        host: ${{ secrets.FTP_SERVER }}
+        username: ${{ secrets.FTP_USERNAME }}
+        password: ${{ secrets.FTP_PASSWORD }}
           
       # connect to the droplet and npm start for backend and frontend
     - name: Execute SSH commmands on remote server
