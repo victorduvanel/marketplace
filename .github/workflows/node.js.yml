@@ -58,7 +58,7 @@ jobs:
           # FTP user
           user: $ {{ secrets.FTP_USERNAME }}
           # FTP password
-          password: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
           # Remote directory
           remoteDir: backend/
           # Local directory
@@ -75,7 +75,7 @@ jobs:
           # FTP user
           user: $ {{ secrets.FTP_USERNAME }}
           # FTP password
-          password: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
           # Remote directory
           remoteDir: frontend/
           # Local directory
