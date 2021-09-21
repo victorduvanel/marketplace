@@ -16,12 +16,12 @@ jobs:
       uses: actions/checkout@v2
         
     # install on frontend
-    - run: cd frontend/
     - run: npm i
+      working-directory: ./frontend
     
     # install on backend
     - run: cd ../backend/
-    - run: npm i
+      working-directory: ./backend
     
     # SUBSTITUTE WITH SECRETS 
     # replace to_be_replaced_key_for_stripe by ${{ secrets.STRIPE_KEY }}
