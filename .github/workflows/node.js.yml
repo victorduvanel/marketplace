@@ -32,14 +32,21 @@ jobs:
     - run: npm i
     
     # SUBSTITUTE WITH SECRETS 
-    # TO BE DONE
-    # PREND LE FICHIER DIGITAL-OCEANS.ENV et remplace to_be_replaced_key_for_stripe par ${{ secrets.STRIPE_KEY }}
+    # replace to_be_replaced_key_for_stripe by ${{ secrets.STRIPE_KEY }}
     - uses: bluwy/substitute-string-action@v1
       id: sub
       with:
         _input-file: './frontend/digital-oceans.env'
         _format-key: '%%key%%'
         stripe_key: ${{ secrets.REACT_APP_STRIPE_KEY }}
+        stripe_secret: ${{ sk_test_kgdUGG02Zzbo4gGcWmkV1Ug2 }}
+        app_api: ${{ secrets.REACT_APP_API }}
+        database: ${{ secrets.DATABASE }}
+        port: ${{ secrets.PORT }}
+        jwt: ${{ secrets.JWT_SECRET }}
+        stripe_redirect: ${{ secrets.STRIPE_REDIRECT_URL }}
+        stripe_setting_redirect: ${{ secrets.STRIPE_SETTING_REDIRECT_URL }}
+        
     
     # send files of frontend
     - name: ftp-action
@@ -47,46 +54,46 @@ jobs:
         # uses: sebastianpopp/ftp-action@eb75c5cb29d23ee4a729720a27dfb66403cb0f6d
       uses: sebastianpopp/ftp-action@v2.0.0
       with:
-        # FTP host
-        host: 
-        # FTP user
-        user: 
-        # FTP password
-        password: 
-        # Force SSL encryption
-        forceSsl: # optional, default is false
-        # Local directory
-        localDir: # optional, default is .
-        # Remote directory
-        remoteDir: # optional, default is .
+         # FTP host
+          host: 
+          # FTP user
+          user: 
+          # FTP password
+          password: 
+          # Force SSL encryption
+          forceSsl: # optional, default is false
+          # Local directory
+          localDir: # optional, default is .
+          # Remote directory
+          remoteDir: # optional, default is .
 
-    # send files of backend
+      # send files of backend
     - name: ftp-action
-      # You may pin to the exact commit or the version.
-      # uses: sebastianpopp/ftp-action@eb75c5cb29d23ee4a729720a27dfb66403cb0f6d
+        # You may pin to the exact commit or the version.
+        # uses: sebastianpopp/ftp-action@eb75c5cb29d23ee4a729720a27dfb66403cb0f6d
       uses: sebastianpopp/ftp-action@v2.0.0
-      with:
+          with:
         # FTP host
-        host: 
-        # FTP user
-        user: 
-        # FTP password
-        password: 
-        # Force SSL encryption
-        forceSsl: # optional, default is false
-        # Local directory
-        localDir: # optional, default is .
-        # Remote directory
-        remoteDir: # optional, default is .
+          host: 
+          # FTP user
+          user: 
+          # FTP password
+          password: 
+          # Force SSL encryption
+          forceSsl: # optional, default is false
+          # Local directory
+          localDir: # optional, default is .
+         # Remote directory
+          remoteDir: # optional, default is .
 
       # connect to the droplet and npm start for backend and frontend
-      - name: Execute SSH commmands on remote server
-        uses: tarunjangra/ssh-remote-cmd@v1
-        with:
-          # Trouver un moyen pour récupérer les fichiers digital-oceans-deploy.env et docker-compose-deploy.yml
-          command: |
-            cd frontend/ && (npm run start&)
-            cd ../backend/ && (npm run start&)
-          host: ${{ secrets.DIGITAL_OCEANS_HOST }}
-          user: root
-          pass: ${{ secrets.DIGITAL_OCEANS_PASSWORD }}
+    - name: Execute SSH commmands on remote server
+      uses: tarunjangra/ssh-remote-cmd@v1
+      with:
+        # Trouver un moyen pour récupérer les fichiers digital-oceans-deploy.env et docker-compose-deploy.yml
+         command: |
+           cd frontend/ && (npm run start&)
+           cd ../backend/ && (npm run start&)
+         host: ${{ secrets.DIGITAL_OCEANS_HOST }}
+         user: root
+         pass: ${{ secrets.DIGITAL_OCEANS_PASSWORD }}
