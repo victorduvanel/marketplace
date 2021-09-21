@@ -55,11 +55,11 @@ jobs:
       uses: sebastianpopp/ftp-action@v2.0.0
       with:
          # FTP host
-          host: 
+          host: ${{ secrets.FTP_SERVER }}
           # FTP user
-          user: 
+          user: $ {{ secrets.FTP_USERNAME }}
           # FTP password
-          password: 
+          password: ${{ secrets.FTP_USERNAME }}
           # Force SSL encryption
           forceSsl: # optional, default is false
           # Local directory
