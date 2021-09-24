@@ -10,12 +10,14 @@ export const register = async (req, res) => {
     if (!password || password.lenght < 6)
       return res
         .status(400)
-        .send("Le mot de passe est requis et doit contenir 6 caractères minimum");
+        .send(
+          "Le mot de passe est requis et doit contenir 6 caractères minimum"
+        );
     let userExist = await User.findOne({ email }).exec();
     if (userExist) return res.status(400).send("Cet email est déjà utilisé");
     // ==> Register
     const user = new User(req.body);
-    
+
     await user.save();
     console.log("YOUHOU, UTILISATEUR CRÉÉ", user);
     return res.json({ ok: true });
@@ -26,16 +28,20 @@ export const register = async (req, res) => {
 };
 
 export const login = async (req, res) => {
-  const { email, password } = req.body;
   try {
+    const { email, password } = req.body;
+    //check if user with this email exist
     let user = await User.findOne({ email }).exec();
     if (!user)
-      res.status(400).send("Aucun utilisateur avec cet email n'a été trouvé");
-
+      return res
+        .status(400)
+        .send("Aucun utilisateur avec cet email n'a été trouvé");
+    // compare password
     user.comparePassword(password, (err, match) => {
       console.log("COMPARE PASSORD IN LOGIN ERROR", err);
       if (!match || err)
         return res.status(400).send("Le password est incorrect");
+      // GENERATE TOKEN
       let token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, {
         expiresIn: "7d",
       });
@@ -49,7 +55,8 @@ export const login = async (req, res) => {
           updatedAt: user.updatedAt,
           stripe_account_id: user.stripe_account_id,
           stripe_seller: user.stripe_seller,
-          stripeSession: user.stripeSession,        },
+          stripeSession: user.stripeSession,
+        },
       });
     });
   } catch (err) {

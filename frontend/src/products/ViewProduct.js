@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { read } from "../actions/products";
+import { useSelector } from "react-redux";
 
-const ViewProduct = ({ match }) => {
+const ViewProduct = ({ match, history }) => {
   const [product, setProduct] = useState({});
   const [image, setImage] = useState("");
+
+  const { auth } = useSelector((state) => ({ ...state }));
 
   useEffect(() => {
     loadSellerProduct();
@@ -13,6 +16,14 @@ const ViewProduct = ({ match }) => {
     // console.log(res);
     setProduct(res.data);
     setImage(`${process.env.REACT_APP_API}/product/image/${res.data._id}`);
+  };
+
+  const handleClick = (e) => {
+    e.preventDefault();
+    if (!auth) history.push("/login");
+    console.log(
+      "get session id from stripe to show a button > checkout with stripe"
+    );
   };
   return (
     <>
@@ -32,11 +43,16 @@ const ViewProduct = ({ match }) => {
           <div className="col-md-6">
             <br />
             <b>{product.description}</b>
-            <p className="alert alert-info mt-3">{product.price}</p>
+            <p className="alert alert-dark mt-3">{product.price}</p>
             <i> Posté par {product.postedBy && product.postedBy.name}</i>
             <br />
-            <button className="btn btn-clock btn-lg btn-dark mt-3">
-              Achter maintenant
+            <button
+              onClick={handleClick}
+              className="btn btn-clock btn-lg btn-dark mt-3"
+            >
+              {auth && auth.token
+                ? "Acheter maintenant"
+                : "Connectez-vous pour acheter"}
             </button>
           </div>
         </div>
