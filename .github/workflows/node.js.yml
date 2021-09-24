@@ -20,21 +20,21 @@ jobs:
       uses: bluwy/substitute-string-action@v1
       id: sub-frontend
       with:
-        _input-file: 'frontend/.env'
-        _output-file: 'frontend/.env'
+        _input-file: 'frontend/digital-ocean.env'
+        _output-file: 'frontend/digital-ocean.env'
         _format-key: '%%key%%'
         stripe_key: ${{ secrets.REACT_APP_STRIPE_KEY }}
         app_api: ${{ secrets.REACT_APP_API }}
         
-    - run: cat frontend/.env
+    - run: cat frontend/digital-ocean.env
     
     # Substitute secret for the frontend part
     - name: Substitute backend env file
       uses: bluwy/substitute-string-action@v1
       id: sub-backend
       with:
-        _input-file: 'backend/.env'
-        _output-file: 'backend/.env'
+        _input-file: 'backend/digital-ocean.env'
+        _output-file: 'backend/digital-ocean.env'
         _format-key: '%%key%%'
         stripe_secret: ${{ secrets.STRIPE_SECRET }}
         database: ${{ secrets.DATABASE }}
@@ -43,7 +43,7 @@ jobs:
         stripe_redirect: ${{ secrets.STRIPE_REDIRECT_URL }}
         stripe_setting_redirect: ${{ secrets.STRIPE_SETTING_REDIRECT_URL }}
         
-    - run: cat backend/.env
+    - run: cat backend/digital-ocean.env
     
     # send files of frontend
     - name: Deploy frontend files via SSH
