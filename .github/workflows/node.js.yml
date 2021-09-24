@@ -73,8 +73,6 @@ jobs:
           command: |
             ufw allow 3000
             ufw allow 8000
-            sudo snap install node --classic
-            killall node
             cd frontend/
             npm i &
             npm start &
@@ -84,3 +82,7 @@ jobs:
           host: 164.90.175.228
           user: root
           pass: dy#3d#v2Y7JQAT
+
+
+          # sudo snap install node --classic
+          # killall node

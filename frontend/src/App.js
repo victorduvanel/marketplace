@@ -12,6 +12,7 @@ import DashboardSeller from "./user/DashboardSeller";
 import NewProduct from "./products/NewProduct";
 import StripeCallback from "./stripe/StripeCallback";
 import EditProduct from "./products/EditProduct";
+import ViewProduct from "./products/ViewProduct"
 
 function App() {
   return (
@@ -39,7 +40,7 @@ function App() {
           component={StripeCallback}
         />
         <PrivateRoute exact path="/product/edit/:productId" component={EditProduct} />
-
+        <Route exact path="/product/:productId" component={ViewProduct} />
       </Switch>
     </BrowserRouter>
   );

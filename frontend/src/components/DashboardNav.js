@@ -7,7 +7,7 @@ const DashboardNav = () => {
     <ul className="nav nav-tabs">
       <li className="nav-item">
         <Link
-          className={`nav-link ${active === "/dashboard" && "active"}`}
+          className={`nav-link link-success ${active === "/dashboard" && "active"}`}
           to="/dashboard"
         >
           Vos achats
@@ -15,7 +15,7 @@ const DashboardNav = () => {
       </li>
       <li className="nav-item">
         <Link
-          className={`nav-link ${active === "/dashboard/seller" && "active"}`}
+          className={`nav-link link-success ${active === "/dashboard/seller" && "active"}`}
           to="/dashboard/seller"
         >
           Vendre

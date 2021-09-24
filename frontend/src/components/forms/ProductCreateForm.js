@@ -55,7 +55,7 @@ const ProductCreateForm = ({
         />
       </div>
 
-      <button className="btn btn-outline-primary m-2">Enregistrer</button>
+      <button className="btn btn-outline-dark m-2">Enregistrer</button>
     </form>
   );
 };

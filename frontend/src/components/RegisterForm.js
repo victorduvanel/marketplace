@@ -39,7 +39,7 @@ const RegisterForm = ({
             />
         </div>
 
-        <button disabled={!name || !email || !password} className="btn btn-primary">Envoyer</button>
+        <button disabled={!name || !email || !password} className="btn btn-dark">Envoyer</button>
     </form>
 )
 

@@ -19,7 +19,7 @@ const Dashboard = () => {
             <h2>Vos achats</h2>
           </div>
           <div className="col-md-2">
-            <Link to="/" className="btn btn-primary">Chercher des articles</Link>
+            <Link to="/" className="btn btn-dark">Chercher des articles</Link>
           </div>
         </div>
       </div>

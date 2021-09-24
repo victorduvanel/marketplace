@@ -27,7 +27,7 @@ const LoginForm = ({
             />
         </div>
 
-        <button disabled={!email || !password} className="btn btn-primary">Envoyer</button>
+        <button disabled={!email || !password} className="btn btn-dark">Envoyer</button>
     </form>
 )
 

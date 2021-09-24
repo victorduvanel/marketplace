@@ -51,7 +51,7 @@ const DashboardSeller = () => {
           <h2>Vos articles</h2>
         </div>
         <div className="col-md-2 mb-3">
-          <Link to="/products/newproduct" className="btn btn-primary">
+          <Link to="/products/newproduct" className="btn btn-dark">
             + Ajouter
           </Link>
         </div>
@@ -80,7 +80,7 @@ const DashboardSeller = () => {
           <button
             disabled={loading}
             onClick={handleClick}
-            className="btn btn-primary mb-3"
+            className="btn btn-dark mb-3"
           >
             {loading ? "Chargement.." : "Devenir vendeur"}
           </button>
