@@ -1,35 +1,86 @@
 # This workflow will do a clean install of node dependencies, cache/restore them, build the source code and run tests across different versions of node
 # For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
 
-name: Node.js CI
+name: Build and deploy the *FAMOUS* Marketplace of totor.ch on its own droplet
 
-on:
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
-
-defaults:
-  run:
-    working-directory: frontend
+on: push
 
 jobs:
   build:
 
     runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        node-version: [12.x, 14.x, 16.x]
-        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
-
+    
     steps:
-    - uses: actions/checkout@v2
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v2
+    # checkout
+    - name: Check out repository code
+      uses: actions/checkout@v2
+    
+    # Substitute secret for the frontend part
+    - name: Substitute frontend env file
+      uses: bluwy/substitute-string-action@v1
+      id: sub-frontend
       with:
-        node-version: ${{ matrix.node-version }}
-        cache: 'npm'
-    - run: npm ci
-    - run: npm run build --if-present
-    - run: npm test
+        _input-file: 'frontend/.env'
+        _output-file: 'frontend/.env'
+        _format-key: '%%key%%'
+        stripe_key: ${{ secrets.REACT_APP_STRIPE_KEY }}
+        app_api: ${{ secrets.REACT_APP_API }}
+        
+    - run: cat frontend/.env
+    
+    # Substitute secret for the frontend part
+    - name: Substitute backend env file
+      uses: bluwy/substitute-string-action@v1
+      id: sub-backend
+      with:
+        _input-file: 'backend/.env'
+        _output-file: 'backend/.env'
+        _format-key: '%%key%%'
+        stripe_secret: ${{ secrets.STRIPE_SECRET }}
+        database: ${{ secrets.DATABASE }}
+        port: ${{ secrets.PORT }}
+        jwt: ${{ secrets.JWT_SECRET }}
+        stripe_redirect: ${{ secrets.STRIPE_REDIRECT_URL }}
+        stripe_setting_redirect: ${{ secrets.STRIPE_SETTING_REDIRECT_URL }}
+        
+    - run: cat backend/.env
+    
+    # send files of frontend
+    - name: Deploy frontend files via SSH
+      uses: appleboy/scp-action@master
+      with:
+        host: 164.90.175.228
+        username: root
+        password: dy#3d#v2Y7JQAT
+        source: "frontend/*"
+        target: "."
+        
+    # send files of backend
+    - name: Deploy backend files via SSH
+      uses: appleboy/scp-action@master
+      with:
+        host: 164.90.175.228
+        username: root
+        password: dy#3d#v2Y7JQAT
+        source: "backend/*"
+        target: "."
+          
+      # connect to the droplet and npm start for backend and frontend
+    - name: Execute SSH commmands on remote server
+      uses: tarunjangra/ssh-remote-cmd@v1
+      with:
+          # Trouver un moyen pour récupérer les fichiers digital-oceans-deploy.env et docker-compose-deploy.yml
+          command: |
+            ufw allow 3000
+            ufw allow 8000
+            sudo snap install node --classic
+            killall node
+            cd frontend/
+            npm i &
+            npm start &
+            cd ../backend/
+            npm i &
+            npm start &
+          host: 164.90.175.228
+          user: root
+          pass: dy#3d#v2Y7JQAT
