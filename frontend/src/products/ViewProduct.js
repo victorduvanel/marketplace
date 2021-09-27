@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { read } from "../actions/products";
+import { getSessionId } from "../actions/stripe";
 import { useSelector } from "react-redux";
+import { loadStripe } from "@stripe/stripe-js";
 
 const ViewProduct = ({ match, history }) => {
   const [product, setProduct] = useState({});
   const [image, setImage] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const { auth } = useSelector((state) => ({ ...state }));
 
@@ -18,12 +21,19 @@ const ViewProduct = ({ match, history }) => {
     setImage(`${process.env.REACT_APP_API}/product/image/${res.data._id}`);
   };
 
-  const handleClick = (e) => {
+  const handleClick = async (e) => {
     e.preventDefault();
+    setLoading(true);
     if (!auth) history.push("/login");
-    console.log(
-      "get session id from stripe to show a button > checkout with stripe"
-    );
+    console.log(auth.token, match.params.productId);
+    let res = await getSessionId(auth.token, match.params.productId);
+    // console.log("get session Id response", res.data.sessionId)
+    const stripe = await loadStripe(process.env.REACT_APP_STRIPE_KEY);
+    stripe
+      .redirectToCheckout({
+        sessionId: res.data.sessionId,
+      })
+      .then((result) => console.log(result));
   };
   return (
     <>
@@ -49,8 +59,11 @@ const ViewProduct = ({ match, history }) => {
             <button
               onClick={handleClick}
               className="btn btn-clock btn-lg btn-dark mt-3"
+              disable={loading}
             >
-              {auth && auth.token
+              {loading
+                ? "Chargement..."
+                : auth && auth.token
                 ? "Acheter maintenant"
                 : "Connectez-vous pour acheter"}
             </button>

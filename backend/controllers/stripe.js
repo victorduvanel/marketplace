@@ -1,6 +1,7 @@
 import User from "../models/user";
 import Stripe from "stripe";
 import queryString from "query-string";
+import product from '../models/product'
 
 const stripe = Stripe(process.env.STRIPE_SECRET);
 
@@ -94,4 +95,45 @@ export const payoutSetting = async (req, res) => {
   } catch (err) {
     console.log("STRIPE PAYOUT SETTING ERR", err);
   }
+};
+
+export const stripeSessionId = async (req, res) => {
+  // console.log("you hit stripe session ID badass totor, here is it : ", req.body.productId)
+
+  // 1. get productId from req.body
+  const { productId } = req.body;
+  // 2. find the product based on product id from db
+  const item = await product.findById(productId).populate("postedBy").exec();
+  // 3. 10% charge as application fee
+  const fee = (item.price * 10) / 100;
+  // 4. create a session
+  const session = await stripe.checkout.sessions.create({
+    payment_method_types: ["card"],
+    // 5. purchasing item details, it will be shown to user on checkout
+    line_items: [
+      {
+        name: item.title,
+        amount: item.price * 100, // c'est en centimes
+        currency: "chf",
+        quantity: 1,
+      },
+    ],
+    // 6. create payment intent with application fee and destination charge 90%
+    payment_intent_data: {
+      application_fee_amount: fee * 100,
+      // this seller can see his balance in our frontend dashboard
+      transfer_data: {
+        destination: item.postedBy.stripe_account_id,
+      },
+    },
+    //success and cancel
+    success_url: process.env.STRIPE_SUCCESS_URL,
+    cancel_url: process.env.STRIPE_CANCEL_URL,
+  });
+  // 7. add this session object to user in the db
+  await User.findByIdAndUpdate(req.user._id, { stripeSession: session }).exec();
+  // 8. send  session id as response to frontend
+  res.send({
+    sessionId: session.id,
+  });
 };

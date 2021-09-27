@@ -36,7 +36,7 @@ const SmallCard = ({
                 {p.title}{" "}
                 <span className="float-right text-dark lead">
                   {currencyFormatter({
-                    amount: p.price,
+                    amount: p.price * 100,
                     currency: "chf",
                   })}
                 </span>
