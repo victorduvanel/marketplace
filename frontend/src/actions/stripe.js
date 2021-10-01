@@ -57,3 +57,14 @@ export const getSessionId = async (token, productId) =>
     { productId },
     { headers: { Authorization: `Bearer ${token}` } }
   );
+
+export const stripeSuccessRequest = async (token, productId) =>
+  await axios.post(
+    `${process.env.REACT_APP_API}/stripe-success`,
+    { productId },
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );

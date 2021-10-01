@@ -1,7 +1,8 @@
 import User from "../models/user";
 import Stripe from "stripe";
 import queryString from "query-string";
-import product from '../models/product'
+import Product from "../models/product";
+import Order from "../models/order";
 
 const stripe = Stripe(process.env.STRIPE_SECRET);
 
@@ -103,7 +104,7 @@ export const stripeSessionId = async (req, res) => {
   // 1. get productId from req.body
   const { productId } = req.body;
   // 2. find the product based on product id from db
-  const item = await product.findById(productId).populate("postedBy").exec();
+  const item = await Product.findById(productId).populate("postedBy").exec();
   // 3. 10% charge as application fee
   const fee = (item.price * 10) / 100;
   // 4. create a session
@@ -127,7 +128,7 @@ export const stripeSessionId = async (req, res) => {
       },
     },
     //success and cancel
-    success_url: process.env.STRIPE_SUCCESS_URL,
+    success_url: `${process.env.STRIPE_SUCCESS_URL}/${item.id}`,
     cancel_url: process.env.STRIPE_CANCEL_URL,
   });
   // 7. add this session object to user in the db
@@ -136,4 +137,44 @@ export const stripeSessionId = async (req, res) => {
   res.send({
     sessionId: session.id,
   });
+};
+
+export const stripeSuccess = async (req, res) => {
+  try {
+    // 1. get product ID from req.body
+    const { productId } = req.body;
+    // 2. find currently logged in user
+    const user = await User.findById(req.user._id).exec();
+    // 2.1 check is user has Stripe session
+    if (!user.stripeSession) return;
+    // 3. retrieve stripe session, bases on session id we previously save in user db
+    const session = await stripe.checkout.sessions.retrieve(
+      user.stripeSession.id
+    );
+    // 4. if session payment status id paid, create order
+    if (session.payment_status === "paid") {
+      // 5. check if order with that session id already exist by querying orders collection
+      const orderExist = await Order.findOne({
+        "session.id": session.id,
+      }).exec();
+      if (orderExist) {
+        // 6. if order exist send success true
+        res.json({ succes: true });
+      } else {
+        // 7. else create new order and send success true
+        let newOrder = await new Order({
+          product: productId,
+          session,
+          orderedBy: user._id,
+        }).save();
+        // 8. remove user's stripeSession
+        await User.findByIdAndUpdate(user._id, {
+          $set: { stripeSession: {} },
+        });
+        res.json({ success: true });
+      }
+    }
+  } catch (err) {
+    console.log("STRIPE SUCCESS ERR", err);
+  }
 };
