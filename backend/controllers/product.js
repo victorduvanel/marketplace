@@ -110,3 +110,19 @@ export const userProductPurchase = async (req, res) => {
     .exec();
   res.json(all);
 };
+
+export const isAllreadyPurchased = async (req, res) => {
+  const { productId } = req.params;
+  // find orders of the currently logged in user
+  const userOrders = await Order.find({ orderedBy: req.user._id })
+    .select("product")
+    .exec();
+  // check if productId is found in userOrders array
+  let ids = [];
+  for (let i = 0; i < userOrders.length; i++) {
+    ids.push(userOrders[i].product.toString());
+  }
+  res.json({
+    ok: ids.includes(productId),
+  });
+};

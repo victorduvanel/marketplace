@@ -15,6 +15,7 @@ import {
   read,
   update,
   userProductPurchase,
+  isAllreadyPurchased,
 } from "../controllers/product";
 
 router.post("/create-product", requireSignin, formidable(), create);
@@ -38,5 +39,5 @@ router.put(
 
 //orders
 router.get('/user-product-purchase', requireSignin, userProductPurchase)
-
+router.get('/is-already-purchased/:productId', requireSignin, isAllreadyPurchased)
 module.exports = router;

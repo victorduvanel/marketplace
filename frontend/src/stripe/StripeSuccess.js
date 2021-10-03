@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { stripeSuccessRequest } from "../actions/stripe";
 import { LoadingOutlined } from "@ant-design/icons";

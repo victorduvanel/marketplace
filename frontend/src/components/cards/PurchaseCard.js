@@ -1,18 +1,17 @@
 import { useState } from "react";
 import { currencyFormatter } from "../../actions/stripe";
-import { useHistory, Link } from "react-router-dom";
-import { SettingFilled, DeleteOutlined } from "@ant-design/icons";
+import { useHistory } from "react-router-dom";
+import OrderModal from "../modals/OrderModal";
 
-const PurchaseCard = ({
-  product, session, orderedBy }) => {
-      const [showViewMoreButton, setShowViewMoreButton] = useState(false);
-  
-    const history = useHistory();
+const PurchaseCard = ({ product, session, orderedBy }) => {
+  const [showModal, setShowModal] = useState(false);
+
+  const history = useHistory();
   return (
     <>
       <div className="card mb-3">
         <div className="row no-gutters">
-          <div className="col-md-4">
+          <div className="col-md-3">
             {product.image && product.image.contentType ? (
               // eslint-disable-next-line jsx-a11y/img-redundant-alt
               <img
@@ -48,15 +47,22 @@ const PurchaseCard = ({
                 Nombre d'article disponible : {product.quantity}
               </p>
 
+              {showModal && (
+                <OrderModal
+                  session={session}
+                  orderedBy={orderedBy}
+                  showModal={showModal}
+                  setShowModal={setShowModal}
+                />
+              )}
+
               <div className="d-flex justify-content-between h4">
-                {showViewMoreButton && (
-                  <button
-                    onClick={() => history.push(`/product/${product._id}`)}
-                    className="btn btn-dark text-light"
-                  >
-                    Acheter
-                  </button>
-                )}
+                <button
+                  onClick={() => setShowModal(!showModal)}
+                  className="btn btn-dark"
+                >
+                  Détails de l'achat
+                </button>
               </div>
             </div>
           </div>

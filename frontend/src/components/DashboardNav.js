@@ -4,7 +4,7 @@ const DashboardNav = () => {
   const active = window.location.pathname;
   // console.log(active);
   return (
-    <ul className="nav nav-tabs">
+    <ul className="nav nav-tabs mb-3">
       <li className="nav-item">
         <Link
           className={`nav-link link-dark ${active === "/dashboard" && "active"}`}

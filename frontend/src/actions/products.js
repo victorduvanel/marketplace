@@ -47,3 +47,13 @@ export const userProductPurchase = async (token) =>
       Authorization: `Bearer ${token}`,
     },
   });
+
+export const isAllreadyPurchased = async (token, productId) =>
+  await axios.get(
+    `${process.env.REACT_APP_API}/is-already-purchased/${productId}`,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );

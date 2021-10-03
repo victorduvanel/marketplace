@@ -33,7 +33,7 @@ const Dashboard = () => {
       </div>
 
       <div className="container-fluid mt-3">
-        <div className="row">
+        <div className="row mb-">
           <div className="col-md-10">
             <h2>Vos achats</h2>
           </div>
@@ -45,14 +45,13 @@ const Dashboard = () => {
         </div>
       </div>
       <div className="row">
-        {/* {purchase.map((p) => (
+        {purchase.map((p) => (
           <PurchaseCard 
             key={p._id} 
             product={p.product} 
             session={p.session} 
           />
-        ))} */}
-        <pre>{JSON.stringify(purchase, null, 4)}</pre>
+        ))}
       </div>
     </>
   );

@@ -13,7 +13,7 @@ const SmallCard = ({
     <>
       <div className="card mb-3">
         <div className="row no-gutters">
-          <div className="col-md-4">
+          <div className="col-md-2">
             {p.image && p.image.contentType ? (
               // eslint-disable-next-line jsx-a11y/img-redundant-alt
               <img
