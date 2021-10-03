@@ -14,6 +14,7 @@ import {
   remove,
   read,
   update,
+  userProductPurchase,
 } from "../controllers/product";
 
 router.post("/create-product", requireSignin, formidable(), create);
@@ -34,5 +35,8 @@ router.put(
   formidable(),
   update
 );
+
+//orders
+router.get('/user-product-purchase', requireSignin, userProductPurchase)
 
 module.exports = router;

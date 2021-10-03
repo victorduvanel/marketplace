@@ -40,3 +40,10 @@ export const updateProduct = async (token, data, productId) =>
       },
     }
   );
+
+export const userProductPurchase = async (token) =>
+  await axios.get(`${process.env.REACT_APP_API}/user-product-purchase`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
