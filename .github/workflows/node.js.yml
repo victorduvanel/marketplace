@@ -75,7 +75,7 @@ jobs:
             ufw allow 8000
             cd frontend/
             npm i &
-            npm start &
+            npm build &
             cd ../backend/
             npm i &
             npm start &
