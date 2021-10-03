@@ -1,36 +1,37 @@
-import mongoose from "mongoose"
+import mongoose from "mongoose";
 
-const {Schema} = mongoose
-const {ObjectId} = mongoose.Schema
+const { Schema } = mongoose;
+const { ObjectId } = mongoose.Schema;
 
-const productSchema = new Schema({
+const productSchema = new Schema(
+  {
     title: {
-        type: String,
-        required: 'Le titre est requis'
+      type: String,
+      required: "Le titre est requis",
     },
     description: {
-        type: String,
-        required: 'La description est requis',
-        mayLength: 10000
+      type: String,
+      required: "La description est requis",
+      mayLength: 10000,
     },
     price: {
-        type: Number,
-        required: 'Le prix est requis',
-        trim: true
+      type: Number,
+      required: "Le prix est requis",
+      trim: true,
     },
     postedBy: {
-        type: ObjectId,
-        ref: 'User'
+      type: ObjectId,
+      ref: "User",
     },
     image: {
-        data: Buffer,
-        contentType: "String"
+      data: Buffer,
+      contentType: String,
     },
     quantity: {
-        type: Number,
+      type: Number,
     },
-    
-}, {timestamps: true}
+  },
+  { timestamps: true }
 );
 
-export default mongoose.model('Product', productSchema);
+export default mongoose.model("Product", productSchema);

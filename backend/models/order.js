@@ -3,7 +3,7 @@ const { ObjectId } = mongoose.Schema;
 
 const orderSchema = new mongoose.Schema(
   {
-    hotel: {
+    product: {
       type: ObjectId,
       ref: "Product",
     },

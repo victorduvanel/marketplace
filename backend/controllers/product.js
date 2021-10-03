@@ -1,6 +1,6 @@
 import Product from "../models/product";
+import Order from "../models/order";
 import fs from "fs";
-import Order from "../models/order"
 
 export const create = async (req, res) => {
   // console.log('req.fields', req.fields)
@@ -57,12 +57,14 @@ export const sellerProducts = async (req, res) => {
     .select("-image.data")
     .populate("postedBy", "_id name")
     .exec();
-  console.log(all);
+  // console.log(all);
   res.send(all);
 };
 
 export const remove = async (req, res) => {
-  let removed = await Product.findByIdAndDelete(req.params.productId).exec();
+  let removed = await Product.findByIdAndDelete(req.params.productId)
+    .select("-image.data")
+    .exec();
   res.json(removed);
 };
 
@@ -71,7 +73,6 @@ export const read = async (req, res) => {
     .populate("postedBy", "_id name")
     .select("-image.data")
     .exec();
-  console.log("SINGLE PRODUCT", product);
   res.json(product);
 };
 
@@ -102,8 +103,7 @@ export const update = async (req, res) => {
 };
 
 export const userProductPurchase = async (req, res) => {
-  const all = await Order
-    .find({ orderedBy: req.user._id })
+  const all = await Order.find({ orderedBy: req.user._id })
     .select("session")
     .populate("product", "-image.data")
     .populate("orderedBy", "_id name")
