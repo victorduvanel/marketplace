@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { allProducts } from "../actions/products";
 import SmallCard from "../components/cards/SmallCard";
-import Search from '../components/forms/Search'
 
 const Home = () => {
   const [products, setProducts] = useState([]);
@@ -17,10 +16,6 @@ const Home = () => {
 
   return (
     <>
-    {/* <div className="col w-100">
-      <br/>
-      <Search />
-    </div> */}
       <div className="container-fluid bg-dark p-5 text-center">
         <h1 className="text-light">Tous les produits</h1>
       </div>

@@ -71,6 +71,7 @@ const ViewProduct = ({ match, history }) => {
             <br />
             <b>{product.description}</b>
             <p className="alert alert-dark mt-3">{product.price}</p>
+            <p className="alert alert-dark mt-3">{product.quantity}</p>
             <i> Posté par {product.postedBy && product.postedBy.name}</i>
             <br />
             <button

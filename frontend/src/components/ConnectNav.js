@@ -44,9 +44,8 @@ const ConnectNav = () => {
     <div className="d-flex justify-content-around">
       <Card className="bg-light rounded">
         <Meta
-          avatar={<Avatar>{user.name[0]}</Avatar>}
           title={user.name}
-          description={`Joined ${moment(user.createdAt).fromNow()}`}
+          description={`Membre depuis ${moment(user.createdAt).fromNow()}`}
         />
       </Card>
       {auth &&

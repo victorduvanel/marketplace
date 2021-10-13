@@ -114,6 +114,7 @@ export const userProductPurchase = async (req, res) => {
 export const isAllreadyPurchased = async (req, res) => {
   const { productId } = req.params;
   // find orders of the currently logged in user
+  // TO DO : CHECK QUANTITY INTO STOCK
   const userOrders = await Order.find({ orderedBy: req.user._id })
     .select("product")
     .exec();
