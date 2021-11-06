@@ -49,9 +49,9 @@ jobs:
     - name: Deploy frontend files via SSH
       uses: appleboy/scp-action@master
       with:
-        host: 164.90.175.228
-        username: root
-        password: dy#3d#v2Y7JQAT
+        host: ${{ secrets.FTP_SERVER }}
+        username: ${{ secrets.FTP_USERNAME }}
+        password: ${{ secrets.FTP_PASSWORD }}
         source: "frontend/*"
         target: "."
         
@@ -59,9 +59,9 @@ jobs:
     - name: Deploy backend files via SSH
       uses: appleboy/scp-action@master
       with:
-        host: 164.90.175.228
-        username: root
-        password: dy#3d#v2Y7JQAT
+        host: ${{ secrets.FTP_SERVER }}
+        username: ${{ secrets.FTP_USERNAME }}
+        password: ${{ secrets.FTP_PASSWORD }}
         source: "backend/*"
         target: "."
           
@@ -79,9 +79,9 @@ jobs:
             cd ../backend/
             npm i &
             npm start &
-          host: 164.90.175.228
-          user: root
-          pass: dy#3d#v2Y7JQAT
+          host: ${{ secrets.FTP_SERVER }}
+          user: ${{ secrets.FTP_USERNAME }}
+          pass: ${{ secrets.FTP_PASSWORD }}
 
 
           # sudo snap install node --classic
