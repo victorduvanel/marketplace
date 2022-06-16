@@ -15,6 +15,7 @@ import EditProduct from "./products/EditProduct";
 import ViewProduct from "./products/ViewProduct";
 import StripeSuccess from "./stripe/StripeSuccess";
 import StripeCancel from "./stripe/StripeCancel";
+import Footer from "./components/Footer";
 
 function App() {
   return (
@@ -50,6 +51,7 @@ function App() {
         <PrivateRoute exact path="/stripe/success/:productId" component={StripeSuccess} />
         <PrivateRoute exact path="/stripe/cancel" component={StripeCancel} />
       </Switch>
+      <Footer />
     </BrowserRouter>
   );
 }
