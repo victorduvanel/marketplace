@@ -10,13 +10,13 @@ import { toast } from "react-toastify";
 import SmallCard from "../components/cards/SmallCard";
 
 const DashboardSeller = () => {
-  const { auth } = useSelector((state) => ({ ...state }));
+  const { auth } = useSelector(state => ({ ...state }));
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     loadSellersProducts();
-  }, []);
+  },[]);
 
   const loadSellersProducts = async () => {
     let { data } = await sellerProducts(auth.token);
@@ -36,9 +36,9 @@ const DashboardSeller = () => {
     }
   };
 
-  const handleProductDelete = async (productId) => {
+  const handleProductDelete = async productId => {
     if (!window.confirm("Êtes-vous sûr ?")) return;
-    deleteProduct(auth.token, productId).then((res) => {
+    deleteProduct(auth.token, productId).then(res => {
       toast.success("Produit supprimé");
       loadSellersProducts();
     });
@@ -57,7 +57,7 @@ const DashboardSeller = () => {
         </div>
       </div>
       <div className="row">
-        {products.map((p) => (
+        {products.map(p => (
           <SmallCard
             key={p._id}
             p={p}

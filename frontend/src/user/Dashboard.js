@@ -14,7 +14,7 @@ const Dashboard = () => {
 
   useEffect(() => {
     loadUserPurchase();
-  }, []);
+  },[]);
 
   const loadUserPurchase = async () => {
     const res = await userProductPurchase(token);

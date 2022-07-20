@@ -11,7 +11,7 @@ const SmallCard = ({
   const history = useHistory();
   return (
     <>
-      <div className="card mb-3">
+      <div className="min-vh-50 card mb-3">
         <div className="row no-gutters">
           <div className="col-md-2">
             {p.image && p.image.contentType ? (

@@ -6,7 +6,7 @@ import ProductEditForm from "../components/forms/ProductEditForm";
 
 const EditProduct = ({ match }) => {
   //redux
-  const { auth } = useSelector((state) => ({ ...state }));
+  const { auth } = useSelector(state => ({ ...state }));
   const { token } = auth;
   //state
   const [values, setValues] = useState({
@@ -16,7 +16,7 @@ const EditProduct = ({ match }) => {
     quantity: "",
   });
 
-  const [image, setImage] = useState ('')
+  const [image, setImage] = useState("");
   const [preview, setPreview] = useState(
     "https://via.placeholder.com/100x100.png?text=IMAGE"
   );
@@ -25,7 +25,7 @@ const EditProduct = ({ match }) => {
 
   useEffect(() => {
     loadSellerProduct();
-  }, []);
+  },);
 
   const loadSellerProduct = async () => {
     let res = await read(match.params.productId);
@@ -34,8 +34,8 @@ const EditProduct = ({ match }) => {
     setPreview(`${process.env.REACT_APP_API}/product/image/${res.data._id}`);
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault()
+  const handleSubmit = async e => {
+    e.preventDefault();
 
     let productData = new FormData();
     productData.append("title", title);
@@ -44,23 +44,23 @@ const EditProduct = ({ match }) => {
     productData.append("price", price);
     productData.append("quantity", quantity);
 
-    try { 
-        let res = await updateProduct(token, productData, match.params.productId)
-        console.log('Product update res', res)
-        toast.success(`${res.data.title} a été mis à jour`)
+    try {
+      let res = await updateProduct(token, productData, match.params.productId);
+      console.log("Product update res", res);
+      toast.success(`${res.data.title} a été mis à jour`);
     } catch (err) {
-        console.log(err)
-        toast.error(err.response.data.err)
+      console.log(err);
+      toast.error(err.response.data.err);
     }
   };
 
-  const handleImageChange = (e) => {
+  const handleImageChange = e => {
     // console.log(e.target.files[0])
     setPreview(URL.createObjectURL(e.target.files[0]));
     setImage(e.target.files[0]);
   };
 
-  const handleChange = (e) => {
+  const handleChange = e => {
     setValues({ ...values, [e.target.name]: e.target.value });
   };
 

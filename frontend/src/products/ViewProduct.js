@@ -10,20 +10,20 @@ const ViewProduct = ({ match, history }) => {
   const [loading, setLoading] = useState(false);
   const [allreadyPurchased, setAllreadyPurchased] = useState(false);
 
-  const { auth } = useSelector((state) => ({ ...state }));
+  const { auth } = useSelector(state => ({ ...state }));
 
   useEffect(() => {
     loadSellerProduct();
-  }, []);
+  });
 
   useEffect(() => {
     if (auth && auth.token) {
-      isAllreadyPurchased(auth.token, match.params.productId).then((res) => {
-        console.log(res)
+      isAllreadyPurchased(auth.token, match.params.productId).then(res => {
+        console.log(res);
         if (res.data.ok) setAllreadyPurchased(true);
       });
     }
-  }, []);
+  });
 
   const loadSellerProduct = async () => {
     let res = await read(match.params.productId);
@@ -32,7 +32,7 @@ const ViewProduct = ({ match, history }) => {
     setImage(`${process.env.REACT_APP_API}/product/image/${res.data._id}`);
   };
 
-  const handleClick = async (e) => {
+  const handleClick = async e => {
     e.preventDefault();
 
     if (!auth || !auth.token) {
@@ -50,7 +50,7 @@ const ViewProduct = ({ match, history }) => {
       .redirectToCheckout({
         sessionId: res.data.sessionId,
       })
-      .then((result) => console.log(result));
+      .then(result => console.log(result));
   };
   return (
     <>
@@ -78,7 +78,6 @@ const ViewProduct = ({ match, history }) => {
               onClick={handleClick}
               className="btn btn-clock btn-lg btn-dark mt-3"
               disabled={loading || allreadyPurchased}
-
             >
               {loading
                 ? "Chargement..."

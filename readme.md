@@ -19,12 +19,17 @@ cd frontend && npm i && npm start
 ## Backend environment variable
 ```.env
 //example
-DATABASE=yourDatabaseURl
+DATABASE=yourMongoDBSecrets
 PORT=8000
-JWT_SECRET=PASTYOURJWTSECRET
-STRIPE_SECRET=sk_test_yourstripesecret
-STRIPE_REDIRECT_URL=http://locahost:3000/stripe/callback
-STRIPE_SETTING_REDIRECT_URL=http://locahost:3000/dashboard/seller
+JWT_SECRET=yoRJWTSecret
+STRIPE_SECRET=sk_test_blablablablabla
+STRIPE_REDIRECT_URL=http://localhost:3000/stripe/callback
+STRIPE_SETTING_REDIRECT_URL=http://localhost:3000/dashboard/seller
+STRIPE_SUCCESS_URL=http://localhost:3000/stripe/success
+STRIPE_CANCEL_URL=http://localhost:3000/stripe/cancel
+GOOGLE_CLIENT_SECRET=GOCSPX-blablablablablabla_
+GOOGLE_CLIENT_ID= someTextAndNumericsHere.apps.googleusercontent.com
+
 ```
 ## Frontend environment variable
 
@@ -32,6 +37,8 @@ STRIPE_SETTING_REDIRECT_URL=http://locahost:3000/dashboard/seller
 //example
 REACT_APP_API='http://localhost:8000/api'
 REACT_APP_STRIPE_KEY=pk_test_yourstripetestapikey
+REACT_APP_GOOGLE_CLIENT_ID= someTextAndNumericsHere.apps.googleusercontent.com
+
 ```
 
 ## Contributing to marketplace by totor.ch

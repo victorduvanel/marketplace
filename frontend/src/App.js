@@ -51,7 +51,7 @@ function App() {
         <PrivateRoute exact path="/stripe/success/:productId" component={StripeSuccess} />
         <PrivateRoute exact path="/stripe/cancel" component={StripeCancel} />
       </Switch>
-      <Footer />
+      <Footer /> 
     </BrowserRouter>
   );
 }

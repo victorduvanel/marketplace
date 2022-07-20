@@ -4,7 +4,7 @@ import { useHistory } from "react-router-dom";
 
 const TopNav = () => {
   const dispatch = useDispatch();
-  const { auth } = useSelector((state) => ({ ...state }));
+  const { auth } = useSelector(state => ({ ...state }));
   const history = useHistory();
 
   const logout = () => {
@@ -17,33 +17,38 @@ const TopNav = () => {
   };
 
   return (
-    <div className="nav bg-dark d-flex justify-content-between">
+    <div className="nav bg-dark d-flex justify-content-between p-3">
       <Link className="nav-link text-light" to="/">
-        Home
+        <img
+          alt=""
+          src="/EverAlps_text_seul.png"
+          width="auto"
+          height="30"
+          className="d-inline-block align-top"
+        />{" "}
       </Link>
-
-      {auth !== null && (
+      <div className="d-flex">
+        {auth !== null && (
           <Link className="nav-link text-light" to="/dashboard">
             Dashboard
           </Link>
-          
-      )}
-
-      {auth != null && (
-        <a className="nav-link pointer text-light" onClick={logout}>
-          Logout
-        </a>
-      )}
-      {auth === null && (
-        <>
-          <Link className="nav-link text-light" to="/login">
-            Login
-          </Link>
-          <Link className="nav-link text-light" to="/register">
-            Register
-          </Link>
-        </>
-      )}
+        )}
+        {auth != null && (
+          <a className="nav-link pointer text-light" onClick={logout}>
+            Logout
+          </a>
+        )}
+        {auth === null && (
+          <>
+            <Link className="nav-link text-light" to="/login">
+              Login
+            </Link>
+            <Link className="nav-link text-light" to="/register">
+              Register
+            </Link>
+          </>
+        )}
+      </div>
     </div>
   );
 };

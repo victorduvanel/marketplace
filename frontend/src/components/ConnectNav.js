@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { Card, Avatar, Badge } from "antd";
+import { Card, Badge } from "antd";
 import moment from "moment";
 import {
   getAccountBalance,
@@ -14,24 +14,24 @@ const { Meta } = Card;
 const { Ribbon } = Badge;
 
 const ConnectNav = () => {
-  const [loading, setLoading] = useState(false);
+  const [setLoading] = useState(false);
   const [balance, setBalance] = useState(0);
-  const { auth } = useSelector((state) => ({ ...state }));
+  const { auth } = useSelector(state => ({ ...state }));
   const { user, token } = auth;
 
   useEffect(() => {
-    getAccountBalance(auth.token).then((res) => {
+    getAccountBalance(auth.token).then(res => {
       // console.log(res);
       setBalance(res.data);
     });
-  }, []);
+  }, [ ]);
 
   const handlePayoutSettings = async () => {
     setLoading(true);
     try {
       const res = await payoutSetting(token);
       console.log("RESPONSE FOR PAYOUT SETTING LINK", res);
-      window.location.href = res.data.url
+      window.location.href = res.data.url;
       setLoading(false);
     } catch (err) {
       console.log(err);
@@ -65,7 +65,10 @@ const ConnectNav = () => {
               </Card>
             </Ribbon>
             <Ribbon text="Payout" color="gold">
-              <Card onClick={handlePayoutSettings} className="bg-light pointer rounded">
+              <Card
+                onClick={handlePayoutSettings}
+                className="bg-light pointer rounded"
+              >
                 <SettingOutlined className="h5 pt-2" />
               </Card>
             </Ribbon>

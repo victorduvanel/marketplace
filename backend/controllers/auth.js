@@ -38,7 +38,7 @@ export const login = async (req, res) => {
         .send("Aucun utilisateur avec cet email n'a été trouvé");
     // compare password
     user.comparePassword(password, (err, match) => {
-      console.log("COMPARE PASSORD IN LOGIN ERROR", err);
+      console.log("COMPARE PASSWORD IN LOGIN ERROR", err);
       if (!match || err)
         return res.status(400).send("Le password est incorrect");
       // GENERATE TOKEN

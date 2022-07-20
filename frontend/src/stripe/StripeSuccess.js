@@ -6,14 +6,14 @@ import { LoadingOutlined } from "@ant-design/icons";
 const StripeCancel = ({ match, history }) => {
   const {
     auth: { token },
-  } = useSelector((state) => ({ ...state }));
+  } = useSelector(state => ({ ...state }));
 
   useEffect(() => {
-    // console.log(
-    //   "send productId to backend to create order",
-    //   match.params.productId
-    // );
-    stripeSuccessRequest(token, match.params.productId).then((res) => {
+     console.log(
+       "send productId to backend to create order",
+       match.params.productId
+     );
+    stripeSuccessRequest(token, match.params.productId).then(res => {
       if (res.data.success) {
         // console.log("stripe success response", res.data);
         history.push("/dashboard");
@@ -21,7 +21,7 @@ const StripeCancel = ({ match, history }) => {
         history.push("/stripe/cancel");
       }
     });
-  }, [match.params.productId]);
+  });
 
   return (
     <div className="container">
