@@ -18,7 +18,7 @@
     "express-formidable": "^1.2.0",
     "express-jwt": "^6.0.0",
     "jsonwebtoken": "^8.5.1",
-    "mongoose": "^5.13.3",
+    "mongoose": "^6.5.3",
     "morgan": "^1.10.0",
     "mpath": "^0.8.4",
     "nodemon": "^2.0.12",
